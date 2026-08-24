@@ -1,0 +1,26 @@
+id,name
+topic_ai,AI
+topic_llms,LLMs
+topic_machine_learning,Machine Learning
+topic_deep_learning,Deep Learning
+topic_data_engineering,Data Engineering
+topic_fintech,Fintech
+topic_devtools,DevTools
+topic_cloud_computing,Cloud Computing
+topic_kubernetes,Kubernetes
+topic_docker,Docker
+topic_python,Python
+topic_javascript,JavaScript
+topic_go,Go
+topic_rust,Rust
+topic_web3,Web3
+topic_blockchain,Blockchain
+topic_api_design,API Design
+topic_microservices,Microservices
+topic_backend,Backend
+topic_frontend,Frontend
+topic_full_stack,Full Stack
+topic_mlops,MLOps
+topic_data_science,Data Science
+topic_analytics,Analytics
+topic_nosql,NoSQL

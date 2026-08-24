@@ -1,0 +1,51 @@
+id,name,industry
+company_0,Acme Corp,Analytics
+company_1,DataCo,AI
+company_2,FinBank,AI
+company_3,DevTools Inc,Analytics
+company_4,CloudSync,Fintech
+company_5,Neural Networks Ltd,Data
+company_6,DataFlow Systems,Data
+company_7,FinTech Labs,Data
+company_8,DevTools Pro,Analytics
+company_9,AI Innovations,AI
+company_10,NextGen Data,Analytics
+company_11,QuickBank,Analytics
+company_12,CodeStream,Cloud
+company_13,TechStack,AI
+company_14,BrainWave AI,Cloud
+company_15,Analytics Pro,DevTools
+company_16,MoneyFlow,AI
+company_17,BuildTools,AI
+company_18,Quantum AI,AI
+company_19,DataVault,Data
+company_20,FinanceFlow,Data
+company_21,Deployment Engine,Cloud
+company_22,SmartAI,Cloud
+company_23,DataHub,AI
+company_24,SecureBank,Cloud
+company_25,FastCode,Data
+company_26,Intelligence Systems,Analytics
+company_27,InfoTech,Analytics
+company_28,CloudBase,Analytics
+company_29,Acme Corp 29,Cloud
+company_30,DataCo 30,DevTools
+company_31,FinBank 31,Data
+company_32,DevTools Inc 32,DevTools
+company_33,CloudSync 33,Cloud
+company_34,Neural Networks Ltd 34,Fintech
+company_35,DataFlow Systems 35,Security
+company_36,FinTech Labs 36,Security
+company_37,DevTools Pro 37,AI
+company_38,AI Innovations 38,Security
+company_39,NextGen Data 39,Security
+company_40,QuickBank 40,Data
+company_41,CodeStream 41,Analytics
+company_42,TechStack 42,DevTools
+company_43,BrainWave AI 43,Fintech
+company_44,Analytics Pro 44,Fintech
+company_45,MoneyFlow 45,Data
+company_46,BuildTools 46,Data
+company_47,Quantum AI 47,Security
+company_48,DataVault 48,Fintech
+company_49,FinanceFlow 49,AI

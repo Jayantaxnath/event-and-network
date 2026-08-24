@@ -1,0 +1,13 @@
+id,name,date,location,description
+event_0,AI Summit 2025,2025-02-13,New York,A conference on ai summit 2025.
+event_1,Data Day 2025,2025-06-28,Tokyo,A conference on data day 2025.
+event_2,Fintech Forum,2025-10-09,San Francisco,A conference on fintech forum.
+event_3,DevTools Conf,2025-12-15,Mumbai,A conference on devtools conf.
+event_4,Cloud Native 2025,2025-02-13,New York,A conference on cloud native 2025.
+event_5,AI for Business,2025-09-10,Seattle,A conference on ai for business.
+event_6,Data Engineering Summit,2025-10-28,Tokyo,A conference on data engineering summit.
+event_7,Blockchain Conference,2025-10-07,New York,A conference on blockchain conference.
+event_8,API Design Summit,2025-01-22,Berlin,A conference on api design summit.
+event_9,MLOps Workshop,2025-05-03,Berlin,A conference on mlops workshop.
+event_10,Startup Pitch Day,2025-02-13,Singapore,A conference on startup pitch day.
+event_11,Tech Leaders Summit,2025-08-21,Tokyo,A conference on tech leaders summit.
