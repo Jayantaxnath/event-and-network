@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 
-from db import verify_connection
+from .db import verify_connection
 
 from queries import (
     # Events
