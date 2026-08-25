@@ -11,10 +11,14 @@ def verify_connection():
         print(e)
         return False
     
-def run_query(query, parameters=None):
-    with driver.session() as session:
-        result = session.run(query, parameters or {})
-        return list(result)
+def run_query(query, parameters=None, timeout=30):
+    try:
+        with driver.session() as session:
+            result = session.run(query, parameters or {}, timeout=timeout)
+            return list(result)
+    except Exception as e:
+        print(f"Query failed: {e}")
+        raise
     
 if __name__=="__main__":
     print(verify_connection())
