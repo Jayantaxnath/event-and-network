@@ -55,5 +55,10 @@ export async function getPersonCommonInterests(personId, limit = 20) {
 }
 
 export async function getNetworkPath(personAId, personBId) {
-  return apiRequest(`/people/${personAId}/path-to/${personBId}`);
+  try {
+    return await apiRequest(`/people/${personAId}/path-to/${personBId}`);
+  } catch (err) {
+    // Preserve the detailed error structure from backend
+    throw err;
+  }
 }
