@@ -1,35 +1,52 @@
-# [Event & Networking Platform](!https://event-and-network.vercel.app/)
+# [Event & Networking Platform](https://event-and-network.vercel.app/)
 
-A real-time professional network visualization tool that maps connections between people across events, companies, and shared interests using a graph database.
+An event and networking platform, designed to model and query professional relationships across people, events, companies, and shared interests.
 
-Note: Webapp is deployed in [Render](https://render.com), at first it may take a few seonds to wake up.
+The project addresses a common networking challenge: **how to efficiently discover meaningful connections and relationship paths within a professional network**. A graph database is used as the core backend data layer to make relationship-heavy queries such as shortest paths, shared interests, and connection recommendations efficient and natural to express.
 
-## Use Case 
+The project also includes a React-based web interface to demonstrate and visualize the capabilities of the backend.
 
-**Problem:** At large networking events, it's hard to know who to connect with and how you're linked to someone through mutual contacts.
+> **Note:** The backend is deployed on [Render](https://render.com). Since it runs on a free-tier instance, it may take a few seconds to wake up when accessed for the first time.
 
-**Solution:** Visualize your professional network as an interactive graph showing:
-- How two people are connected (shortest path)
-- Common events, companies, and topics
-- Recommended connections based on shared interests
-- Your proximity in the professional network
+## Use Case
 
-**Who it's for:** Event organizers, recruiters, networking professionals, team-building facilitators.
+### **Business Problem**
+
+At large networking events, professional communities, and industry meetups, it can be difficult to identify **who to connect with, why that connection is relevant, and how two people are connected through existing relationships**.
+
+Traditional relational data models can make these relationship-heavy queries increasingly complex as the number of connections grows.
+
+### **Solution**
+
+The backend models people, events, companies, and interests as a **connected graph**, allowing the system to answer business questions such as:
+
+- How are two people connected?
+- What is the shortest relationship path between two professionals?
+- What events, companies, or topics do two people have in common?
+- Which professionals are potential connections based on shared interests?
+- How closely connected is a person to another individual within the network?
+
+The web application provides an interactive interface for exploring these backend capabilities through graph visualization.
+
+**Who it's for:** Event organizers, recruiters, networking professionals, community managers, and team-building facilitators.
 
 ---
 
 ## 🔗 Why a Graph Database?
 
-Traditional relational databases struggle with relationship queries on large networks. Graph databases excel because:
+The core business problem is **relationship discovery**, which makes a graph database a natural fit.
+
+Traditional relational databases can solve these problems, but relationship-heavy queries often require multiple joins, nested queries, and additional application-side logic. Graph databases are designed to traverse relationships directly.
 
 | Problem | Relational DB | Graph DB |
 |---------|---------------|----------|
-| Find path between 2 people | Multiple JOINs (slow) | Direct traversal (fast) |
-| Find all connections 3 hops away | Complex nested queries | Single traversal query |
-| Recommend similar people | Join-heavy logic | Direct neighbor analysis |
-| Scale relationships | Index overhead | Native relationship queries |
+| Find path between 2 people | Multiple JOINs | Direct graph traversal |
+| Find all connections 3 hops away | Complex nested queries | Multi-hop traversal |
+| Recommend similar people | Join-heavy logic | Neighbor/relationship analysis |
+| Query interconnected entities | Multiple table joins | Native relationship queries |
+| Explore network relationships | Requires additional logic | Relationships are first-class data |
 
-**CognoDB** (our choice) is optimized for relationship queries, making real-time pathfinding and recommendations instant.
+**CognoDB** is used as the graph database because the primary backend requirements involve relationship traversal, pathfinding, and querying interconnected entities.
 
 ---
 
