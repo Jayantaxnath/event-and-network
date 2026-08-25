@@ -1,8 +1,10 @@
-# Event & Network Graph Platform
+# [Event & Networking Platform](!https://event-and-network.vercel.app/)
 
 A real-time professional network visualization tool that maps connections between people across events, companies, and shared interests using a graph database.
 
-## 🎯 Use Case
+Note: Webapp is deployed in [Render](https://render.com), at first it may take a few seonds to wake up.
+
+## Use Case 
 
 **Problem:** At large networking events, it's hard to know who to connect with and how you're linked to someone through mutual contacts.
 
@@ -283,19 +285,3 @@ cd frontend && npm run dev
 - Auto-deploys on git push
 
 ---
-
-## 📝 License
-
-MIT
-
----
-
-## 🤝 Contributing
-
-[Leave blank or add contribution guidelines]
-
----
-
-## 📧 Contact
-
-[Add contact info if needed]
