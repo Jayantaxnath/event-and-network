@@ -14,6 +14,7 @@ from queries import (
     get_person_by_id,
     get_people_with_common_interests,
     shortest_path_between_people,
+    find_path_through_middle_person,
     # Companies
     get_company_by_id,
     get_company_people,
@@ -355,22 +356,61 @@ def person_path(
             {
                 "type": "ATTENDED"
             }
-        ]
+        ],
+        
+        "path_type": "direct" or "middle_person"
     }
 
     Errors:
     404 if no path exists.
     """
 
-    path = shortest_path_between_people(
-        person_a_id,
-        person_b_id,
-    )
+    try:
+        path = shortest_path_between_people(
+            person_a_id,
+            person_b_id,
+        )
+        path_type = "direct"
+    except Exception as e:
+        if "timeout" in str(e).lower() or "timed out" in str(e).lower():
+            raise HTTPException(
+                status_code=504,
+                detail={
+                    "message": "Path search timed out",
+                    "suggestion": "The graph is large, try selecting people with more obvious connections"
+                }
+            )
+        path = None
+        path_type = "direct"
+
+    # If no direct path, try to find a path through a middle person
+    if not path:
+        try:
+            path = find_path_through_middle_person(
+                person_a_id,
+                person_b_id,
+            )
+            path_type = "middle_person"
+        except Exception as e:
+            if "timeout" in str(e).lower() or "timed out" in str(e).lower():
+                raise HTTPException(
+                    status_code=504,
+                    detail={
+                        "message": "Middle person search timed out",
+                        "suggestion": "Try selecting people with more obvious connections or a smaller graph"
+                    }
+                )
+            path = None
 
     if not path:
         raise HTTPException(
             status_code=404,
-            detail="No path found",
+            detail={
+                "message": "No path found between selected individuals",
+                "tried_direct": True,
+                "tried_middle_person": True,
+                "suggestion": "Try selecting different people who may share common events, companies, or topics"
+            }
         )
 
     nodes = [dict(node) for node in path.nodes]
@@ -386,6 +426,7 @@ def person_path(
     return {
         "nodes": nodes,
         "relationships": relationships,
+        "path_type": path_type
     }
 
 

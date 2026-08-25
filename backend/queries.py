@@ -322,6 +322,65 @@ def shortest_path_between_people(person_a_id, person_b_id):
             "a_id": person_a_id,
             "b_id": person_b_id,
         },
+        timeout=60  # 60 second timeout for path queries
+    )
+
+    return res[0]["path"] if res else None
+
+
+def find_path_through_middle_person(person_a_id, person_b_id):
+    """
+    Find the best path through a middle person when no direct path exists.
+    Prioritizes middle persons with strongest connections (shared events, companies, topics).
+
+    Returns:
+    A Neo4j Path object with a middle person connection.
+    """
+
+    query = """
+    MATCH (a:Person {id: $a_id})
+    MATCH (b:Person {id: $b_id})
+    
+    // Find middle persons and score their connection strength
+    MATCH (a)-[r1:ATTENDED|WORKS_AT|INTERESTED_IN|FOCUSED_ON*1..2]-(middle:Person)
+    MATCH (middle)-[r2:ATTENDED|WORKS_AT|INTERESTED_IN|FOCUSED_ON*1..2]-(b)
+    
+    WHERE middle.id <> a.id AND middle.id <> b.id
+    
+    // Calculate connection strength score
+    WITH a, b, middle, 
+         length(r1) + length(r2) as path_length,
+         // Count shared connections
+         size([(a)-[:ATTENDED]->(e:Event)<-[:ATTENDED]-(middle) | 1]) as shared_events_a,
+         size([(middle)-[:ATTENDED]->(e:Event)<-[:ATTENDED]-(b) | 1]) as shared_events_b,
+         size([(a)-[:WORKS_AT]->(c:Company)<-[:WORKS_AT]-(middle) | 1]) as shared_companies_a,
+         size([(middle)-[:WORKS_AT]->(c:Company)<-[:WORKS_AT]-(b) | 1]) as shared_companies_b,
+         size([(a)-[:INTERESTED_IN]->(t:Topic)<-[:INTERESTED_IN]-(middle) | 1]) as shared_topics_a,
+         size([(middle)-[:INTERESTED_IN]->(t:Topic)<-[:INTERESTED_IN]-(b) | 1]) as shared_topics_b
+    
+    // Calculate strength score (prefer shorter paths with more shared connections)
+    WITH a, b, middle, path_length,
+         (shared_events_a + shared_events_b) * 3 +
+         (shared_companies_a + shared_companies_b) * 2 +
+         (shared_topics_a + shared_topics_b) * 1 -
+         path_length * 10 as strength_score
+    
+    ORDER BY strength_score DESC, path_length ASC
+    LIMIT 1
+    
+    // Reconstruct the full path
+    MATCH path = (a)-[*1..2]-(middle)-[*1..2]-(b)
+    
+    RETURN path
+    """
+
+    res = run_query(
+        query,
+        {
+            "a_id": person_a_id,
+            "b_id": person_b_id,
+        },
+        timeout=90  # 90 second timeout for complex middle person queries
     )
 
     return res[0]["path"] if res else None
