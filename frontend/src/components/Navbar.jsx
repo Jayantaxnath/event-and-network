@@ -59,18 +59,21 @@ export default function Navbar() {
               {/* Health Indicator Pill */}
               <div
                 title={dbStatus.online ? 'Neo4j Graph Database Connected' : 'Connecting to Neo4j...'}
-                className={`hidden lg:inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${
-                  dbStatus.online
-                    ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
-                    : 'bg-amber-50 text-amber-700 border-amber-200 animate-pulse'
-                }`}
-              >
-                <span
-                  className={`w-2 h-2 rounded-full ${
-                    dbStatus.online ? 'bg-emerald-500' : 'bg-amber-500'
+                className={`hidden lg:inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-xs font-medium border transition-all duration-500 ${dbStatus.online
+                  ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                  : 'bg-amber-50 text-amber-700 border-amber-200 animate-pulse'
                   }`}
-                ></span>
-                <span>{dbStatus.online ? 'Graph DB Online' : 'Checking DB'}</span>
+              >
+                <span className="relative flex h-2.5 w-2.5">
+                  {dbStatus.online && (
+                    <span className="absolute inset-0 rounded-full bg-emerald-400 animate-ping opacity-75"></span>
+                  )}
+                  <span
+                    className={`relative inline-flex rounded-full h-2.5 w-2.5 ${dbStatus.online ? 'bg-emerald-500' : 'bg-amber-500 animate-pulse'
+                      }`}
+                  ></span>
+                </span>
+                <span>{dbStatus.online ? 'Graph DB' : 'Checking DB'}</span>
               </div>
             </div>
 
@@ -80,11 +83,10 @@ export default function Navbar() {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    location.pathname === item.path
-                      ? 'bg-primary-50 text-primary-700 font-semibold'
-                      : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-                  }`}
+                  className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${location.pathname === item.path
+                    ? 'bg-primary-50 text-primary-700 font-semibold'
+                    : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                    }`}
                 >
                   {item.label}
                 </Link>
@@ -136,11 +138,10 @@ export default function Navbar() {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`block px-3 py-2 rounded-lg text-base font-medium transition-colors ${
-                  location.pathname === item.path
-                    ? 'bg-primary-50 text-primary-700 font-semibold'
-                    : 'text-slate-600 hover:bg-slate-50'
-                }`}
+                className={`block px-3 py-2 rounded-lg text-base font-medium transition-colors ${location.pathname === item.path
+                  ? 'bg-primary-50 text-primary-700 font-semibold'
+                  : 'text-slate-600 hover:bg-slate-50'
+                  }`}
                 onClick={() => setIsOpen(false)}
               >
                 {item.label}
