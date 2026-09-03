@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Search, Calendar, X, ChevronDown } from 'lucide-react';
 import { getEvents } from '../api/events';
+import { getCachedData } from '../api/client';
 import EventCard from '../components/EventCard';
 import LoadingSkeleton from '../components/LoadingSkeleton';
 import ErrorState from '../components/ErrorState';
@@ -12,8 +13,9 @@ const INITIAL_PAGE_SIZE = 9;
 
 export default function Events() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [events, setEvents] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const initialCached = getCachedData('/events');
+  const [events, setEvents] = useState(() => initialCached || []);
+  const [loading, setLoading] = useState(!initialCached);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '');
   const [visibleCount, setVisibleCount] = useState(INITIAL_PAGE_SIZE);
@@ -22,9 +24,11 @@ export default function Events() {
     let isMounted = true;
     async function loadEvents() {
       try {
-        setLoading(true);
+        if (!initialCached) {
+          setLoading(true);
+        }
         const data = await getEvents();
-        if (isMounted) setEvents(data || []);
+        if (isMounted && data) setEvents(data);
       } catch (err) {
         if (isMounted) setError(err.message);
       } finally {
@@ -33,7 +37,7 @@ export default function Events() {
     }
     loadEvents();
     return () => { isMounted = false; };
-  }, []);
+  }, [initialCached]);
 
   const handleQueryChange = (val) => {
     setSearchQuery(val);
