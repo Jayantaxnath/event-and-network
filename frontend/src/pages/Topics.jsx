@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Hash, Calendar, Users, Search, X, ChevronDown } from 'lucide-react';
 import { getTopics, getTopicPeople, getTopicEvents } from '../api/topics';
+import { getCachedData } from '../api/client';
 import TopicBadge from '../components/TopicBadge';
 import PersonCard from '../components/PersonCard';
 import EventCard from '../components/EventCard';
@@ -15,11 +16,17 @@ const INITIAL_PAGE_SIZE = 12;
 export default function Topics() {
   const { topicId } = useParams();
   const navigate = useNavigate();
-  const [topics, setTopics] = useState([]);
-  const [selectedTopic, setSelectedTopic] = useState(null);
+  const initialCached = getCachedData('/topics');
+  const [topics, setTopics] = useState(() => initialCached || []);
+  const [selectedTopic, setSelectedTopic] = useState(() => {
+    if (topicId && initialCached && initialCached.length > 0) {
+      return initialCached.find((t) => t.id === topicId) || null;
+    }
+    return null;
+  });
   const [topicPeople, setTopicPeople] = useState([]);
   const [topicEvents, setTopicEvents] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!initialCached);
   const [detailsLoading, setDetailsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -29,7 +36,9 @@ export default function Topics() {
   useEffect(() => {
     async function loadTopics() {
       try {
-        setLoading(true);
+        if (!initialCached) {
+          setLoading(true);
+        }
         const data = await getTopics();
         setTopics(data || []);
 
