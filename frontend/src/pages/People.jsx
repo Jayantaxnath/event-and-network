@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Users, Search, X, ChevronDown } from 'lucide-react';
 import { getPeople } from '../api/people';
+import { getCachedData } from '../api/client';
 import PersonCard from '../components/PersonCard';
 import LoadingSkeleton from '../components/LoadingSkeleton';
 import ErrorState from '../components/ErrorState';
@@ -10,6 +11,8 @@ import { filterAndSortByPrefix } from '../utils/prefixSearch';
 const INITIAL_PAGE_SIZE = 12;
 
 export default function People() {
+  const initialCached = getCachedData('/companies'); // or people
+  const initialPeopleCached = getCachedData('/people/person_1') ? null : null; // people endpoint is typically queried via company/events/search
   const [allPeople, setAllPeople] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
